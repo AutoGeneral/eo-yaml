@@ -313,6 +313,24 @@ public final class YamlMappingPrintTest {
         );
     }
 
+    /**
+     * Duplication of the test case described https://github.com/decorators-squad/eo-yaml/issues/396 where a sequence
+     * inside a map duplicated the comment.
+     *
+     * @throws Exception If something goes wrong.
+     */
+    @Test
+    public void printsReadYamlDuplicatedComments() throws Exception {
+        final YamlMapping read = Yaml.createYamlInput(
+                new File("src/test/resources/printing_tests/yamlDuplicatedComments.txt")
+        ).readYamlMapping();
+        MatcherAssert.assertThat(
+                read.toString(),
+                Matchers.equalTo(
+                        this.readExpected("yamlDuplicatedCommentsRoundTrip.txt")
+                )
+        );
+    }
 
     /**
      * Read a test resource file's contents.

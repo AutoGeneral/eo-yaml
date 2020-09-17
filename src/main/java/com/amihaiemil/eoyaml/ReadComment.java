@@ -27,6 +27,8 @@
  */
 package com.amihaiemil.eoyaml;
 
+import java.util.Iterator;
+
 /**
  * A comment which has been read from somewhere.
  * @author Mihai Andronache (amihaiemil@gmail.com)
@@ -58,6 +60,16 @@ final class ReadComment implements Comment {
     @Override
     public YamlNode yamlNode() {
         return this.node;
+    }
+
+    @Override
+    public int number() {
+        Iterator<YamlLine> iterator = lines.iterator();
+        int lineNumber = UNKNOWN_LINE_NUMBER;
+        if (iterator.hasNext()) {
+            lineNumber = iterator.next().number();
+        }
+        return lineNumber;
     }
 
     @Override

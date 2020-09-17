@@ -27,6 +27,8 @@
  */
 package com.amihaiemil.eoyaml;
 
+import static com.amihaiemil.eoyaml.Comment.UNKNOWN_LINE_NUMBER;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Iterator;
@@ -41,6 +43,11 @@ import java.util.List;
  * @since 4.3.1
  */
 final class RtYamlPrinter implements YamlPrinter {
+
+    /**
+     * The previous comment encountered.
+     */
+    private Comment lastComment;
 
     /**
      * Writer where the given YAML will be printed.
@@ -302,18 +309,26 @@ final class RtYamlPrinter implements YamlPrinter {
         final String alignment
     ) throws IOException {
         boolean printed = false;
-        if(node != null) {
-            final String com = node.comment().value();
-            if (com.trim().length() != 0) {
-                String[] lines = com.split(System.lineSeparator());
-                for (final String line : lines) {
-                    this.writer
-                            .append(alignment)
-                            .append("# ")
-                            .append(line)
-                            .append(System.lineSeparator());
+        if(node != null && node.comment() != null) {
+            boolean unknownLineNumber = lastComment == null
+                    || lastComment.number() == UNKNOWN_LINE_NUMBER;
+            boolean newLineNumber = lastComment == null
+                    || lastComment.number() != node.comment().number();
+            if (unknownLineNumber || newLineNumber) {
+                Comment tmpComment = node.comment();
+                final String com = tmpComment.value();
+                if (com.trim().length() != 0) {
+                    String[] lines = com.split(System.lineSeparator());
+                    for (final String line : lines) {
+                        this.writer
+                                .append(alignment)
+                                .append("# ")
+                                .append(line)
+                                .append(System.lineSeparator());
+                    }
+                    lastComment = tmpComment;
+                    printed = true;
                 }
-                printed = true;
             }
         }
         return printed;
