@@ -1093,8 +1093,8 @@ public final class ReadYamlMappingTest {
         lines.add(new RtYamlLine("  x: 2", 3));
         final YamlMapping map = new ReadYamlMapping(new AllYamlLines(lines));
         MatcherAssert.assertThat(
-            map.value("a").asMapping().string("x"),
-            Matchers.equalTo("2")
+                map.value("a").asMapping().string("x"),
+                Matchers.equalTo("2")
         );
     }
 
@@ -1115,6 +1115,29 @@ public final class ReadYamlMappingTest {
         MatcherAssert.assertThat(
                 firstValue.asMapping().value("aa").asMapping().string("x"),
                 Matchers.equalTo("1")
+        );
+    }
+
+    /**
+     * ReadYamlMapping returns the correct value for empty maps and sequences.
+     */
+    @Test
+    public void dontTurnEmptyMapsAndArraysIntoStrings() {
+        final List<YamlLine> lines = new ArrayList<>();
+        lines.add(new RtYamlLine("def: {}", 0));
+        lines.add(new RtYamlLine("ghi: []", 1));
+        final YamlMapping map = new ReadYamlMapping(new AllYamlLines(lines));
+        YamlMapping actualMap = map.value("def").asMapping();
+        YamlMapping expectedMap = Yaml.createYamlMappingBuilder().build();
+        MatcherAssert.assertThat(
+                actualMap,
+                Matchers.equalTo(expectedMap)
+        );
+        YamlSequence actualSeq = map.value("ghi").asSequence();
+        YamlSequence expectedSeq = Yaml.createYamlSequenceBuilder().build();
+        MatcherAssert.assertThat(
+                actualSeq,
+                Matchers.equalTo(expectedSeq)
         );
     }
 }
