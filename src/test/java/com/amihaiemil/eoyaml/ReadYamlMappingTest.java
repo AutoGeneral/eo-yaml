@@ -1093,8 +1093,8 @@ public final class ReadYamlMappingTest {
         lines.add(new RtYamlLine("  x: 2", 3));
         final YamlMapping map = new ReadYamlMapping(new AllYamlLines(lines));
         MatcherAssert.assertThat(
-            map.value("a").asMapping().string("x"),
-            Matchers.equalTo("2")
+                map.value("a").asMapping().string("x"),
+                Matchers.equalTo("2")
         );
     }
 
@@ -1127,14 +1127,17 @@ public final class ReadYamlMappingTest {
         lines.add(new RtYamlLine("def: {}", 0));
         lines.add(new RtYamlLine("ghi: []", 1));
         final YamlMapping map = new ReadYamlMapping(new AllYamlLines(lines));
+        YamlMapping actualMap = map.value("def").asMapping();
+        YamlMapping expectedMap = Yaml.createYamlMappingBuilder().build();
         MatcherAssert.assertThat(
-                map.value("def").asMapping(),
-                Matchers.is(Yaml.createYamlMappingBuilder().build())
+                actualMap,
+                Matchers.equalTo(expectedMap)
         );
+        YamlSequence actualSeq = map.value("ghi").asSequence();
+        YamlSequence expectedSeq = Yaml.createYamlSequenceBuilder().build();
         MatcherAssert.assertThat(
-                map.value("ghi").asSequence(),
-                Matchers.is(Yaml.createYamlSequenceBuilder().build())
+                actualSeq,
+                Matchers.equalTo(expectedSeq)
         );
     }
-
 }

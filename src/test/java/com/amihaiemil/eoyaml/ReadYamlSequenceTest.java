@@ -382,8 +382,8 @@ public final class ReadYamlSequenceTest {
         final List<YamlLine> lines = new ArrayList<>();
         lines.add(new RtYamlLine("- {}", 0));
         lines.add(new RtYamlLine("- []", 1));
-        final YamlSequence sequence = new ReadYamlSequence(new AllYamlLines(lines));
-        Iterator<YamlNode> iterator = sequence.values().iterator();
+        final YamlSequence seq = new ReadYamlSequence(new AllYamlLines(lines));
+        Iterator<YamlNode> iterator = seq.values().iterator();
         MatcherAssert.assertThat(
                 iterator.next().asMapping(),
                 Matchers.equalTo(Yaml.createYamlMappingBuilder().build())
