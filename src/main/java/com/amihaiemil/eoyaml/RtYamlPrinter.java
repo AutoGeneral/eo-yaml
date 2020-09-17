@@ -269,7 +269,7 @@ final class RtYamlPrinter implements YamlPrinter {
         final int indentation
     ) throws IOException {
         if(node == null || ((BaseYamlNode) node).isEmpty()) {
-            if (node instanceof EmptyYamlSequence|| node instanceof RtYamlSequence) {
+            if (node instanceof EmptyYamlSequence || node instanceof RtYamlSequence) {
                 this.writer.append(" ").append("[]");
             } else if (node instanceof EmptyYamlMapping || node instanceof RtYamlMapping) {
                 this.writer.append(" ").append("{}");
