@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.amihaiemil.web</groupId>
     <artifactId>eo-yaml</artifactId>
-    <version>5.1.7-SNAPSHOT</version><!--rrv-sed-flag-->
+    <version>5.1.7-396-SNAPSHOT</version><!--rrv-sed-flag-->
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -340,7 +340,7 @@
                 <repository>
                     <id>github</id>
                     <name>GitHub decorators-squad Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/decorators-squad/eo-yaml</url>
+                    <url>https://maven.pkg.github.com/AutoGeneral/eo-yaml</url>
                 </repository>
             </distributionManagement>
         </profile>
