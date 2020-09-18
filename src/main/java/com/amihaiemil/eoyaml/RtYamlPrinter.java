@@ -318,8 +318,8 @@ final class RtYamlPrinter implements YamlPrinter {
         if(node != null && node.comment() != null) {
             boolean unknownLineNumber = lastComment == null
                     || lastComment.number() == UNKNOWN_LINE_NUMBER;
-            boolean newLineNumber = lastComment == null
-                    || lastComment.number() != node.comment().number();
+            boolean newLineNumber = lastComment != null
+                    && lastComment.number() != node.comment().number();
             if (unknownLineNumber || newLineNumber) {
                 Comment tmpComment = node.comment();
                 final String com = tmpComment.value();
